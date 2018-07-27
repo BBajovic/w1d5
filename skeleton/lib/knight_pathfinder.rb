@@ -24,7 +24,7 @@ class KnightPathFinder
     line = []
     line << root_node
 
-    # until previous_moves.count == 64
+
     until line.empty?
       current_position = line.shift
       valid_moves = get_valid_moves(current_position.value)
@@ -39,8 +39,15 @@ class KnightPathFinder
     end
   end
 
-  def fin
+  def find_path(end_pos)
 
+  end
+
+
+
+  def trace_path_back(node)
+    return [node.value] if root_node.value == node.value
+    trace_path_back(node.parent) << value
   end
 
   private
@@ -48,7 +55,6 @@ class KnightPathFinder
   def get_valid_moves(pos)
     x_idx, y_idx = pos
     valid_moves = []
-
 
     KNIGHT_MOVES.each do |move|
       x_move, y_move = move
@@ -61,30 +67,6 @@ class KnightPathFinder
 
       valid_moves << [new_x, new_y]
     end
-    # [-1,1].each do |adder_x|
-    #   new_x = x_idx + adder_x
-    #   next unless new_x.between?(0, 7)
-    #
-    #   [-2,2].each do |adder_y|
-    #     new_y = y_idx + adder_y
-    #     next unless new_y.between?(0, 7)
-    #
-    #     valid_moves << [new_x, new_y]
-    #   end
-    # end
-    #
-    #
-    # [-2,2].each do |adder_x|
-    #   new_x = x_idx + adder_x
-    #   next unless new_x.between?(0, 7)
-    #
-    #   [-1,1].each do |adder_y|
-    #     new_y = y_idx + adder_y
-    #     next unless new_y.between?(0, 7)
-    #
-    #     valid_moves << [new_x, new_y]
-    #   end
-    # end
 
     valid_moves
   end
