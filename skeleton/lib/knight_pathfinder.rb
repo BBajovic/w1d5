@@ -2,6 +2,17 @@ require_relative "00_tree_node"
 
 class KnightPathFinder
 
+  KNIGHT_MOVES = [
+    [-1, 2],
+    [ 1, 2],
+    [ 2, 1],
+    [ 2,-1],
+    [ 1,-2],
+    [-1,-2],
+    [-2, 1],
+    [-2,-1]
+  ]
+
   attr_reader :root_node, :previous_moves
 
   def initialize(start_pos)
@@ -13,8 +24,8 @@ class KnightPathFinder
     line = []
     line << root_node
 
-
-    until previous_moves.count == 64
+    # until previous_moves.count == 64
+    until line.empty?
       current_position = line.shift
       valid_moves = get_valid_moves(current_position.value)
       valid_moves.each do |move|
@@ -28,36 +39,52 @@ class KnightPathFinder
     end
   end
 
+  def fin
+
+  end
+
   private
 
   def get_valid_moves(pos)
     x_idx, y_idx = pos
     valid_moves = []
 
-    [-1,1].each do |adder_x|
-      new_x = x_idx + adder_x
+
+    KNIGHT_MOVES.each do |move|
+      x_move, y_move = move
+
+      new_x = x_idx + x_move
+      new_y = y_idx + y_move
+
       next unless new_x.between?(0, 7)
+      next unless new_y.between?(0, 7)
 
-      [-2,2].each do |adder_y|
-        new_y = y_idx + adder_y
-        next unless new_y.between?(0, 7)
-
-        valid_moves << [new_x, new_y]
-      end
+      valid_moves << [new_x, new_y]
     end
-
-
-    [-2,2].each do |adder_x|
-      new_x = x_idx + adder_x
-      next unless new_x.between?(0, 7)
-
-      [-1,1].each do |adder_y|
-        new_y = y_idx + adder_y
-        next unless new_y.between?(0, 7)
-
-        valid_moves << [new_x, new_y]
-      end
-    end
+    # [-1,1].each do |adder_x|
+    #   new_x = x_idx + adder_x
+    #   next unless new_x.between?(0, 7)
+    #
+    #   [-2,2].each do |adder_y|
+    #     new_y = y_idx + adder_y
+    #     next unless new_y.between?(0, 7)
+    #
+    #     valid_moves << [new_x, new_y]
+    #   end
+    # end
+    #
+    #
+    # [-2,2].each do |adder_x|
+    #   new_x = x_idx + adder_x
+    #   next unless new_x.between?(0, 7)
+    #
+    #   [-1,1].each do |adder_y|
+    #     new_y = y_idx + adder_y
+    #     next unless new_y.between?(0, 7)
+    #
+    #     valid_moves << [new_x, new_y]
+    #   end
+    # end
 
     valid_moves
   end
