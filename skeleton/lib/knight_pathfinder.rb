@@ -2,13 +2,30 @@ require_relative "00_tree_node"
 
 class KnightPathFinder
 
+  attr_reader :root_node, :previous_moves
+
   def initialize(start_pos)
     @root_node = PolyTreeNode.new(start_pos)
-    @valid_moves = Hash.new(0)
+    @previous_moves = {start_pos => true}
   end
 
   def build_move_tree
+    line = []
+    line << root_node
 
+
+    until previous_moves.count == 64
+      current_position = line.shift
+      valid_moves = get_valid_moves(current_position.value)
+      valid_moves.each do |move|
+        unless previous_moves.has_key?(move)
+          next_position = PolyTreeNode.new(move)
+          line << next_position
+          previous_moves[move] = true
+          next_position.parent = current_position
+        end
+      end
+    end
   end
 
   private
@@ -45,4 +62,9 @@ class KnightPathFinder
     valid_moves
   end
 
+end
+
+if __FILE__ == $PROGRAM_NAME
+  k = KnightPathFinder.new([0,0])
+  k.build_move_tree
 end
