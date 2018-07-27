@@ -13,9 +13,9 @@ class KnightPathFinder
 
   private
 
-  def get_possible_moves(pos)
+  def get_valid_moves(pos)
     x_idx, y_idx = pos
-    possible_moves = []
+    valid_moves = []
 
     [-1,1].each do |adder_x|
       new_x = x_idx + adder_x
@@ -25,7 +25,7 @@ class KnightPathFinder
         new_y = y_idx + adder_y
         next unless new_y.between?(0, 7)
 
-        possible_moves << [new_x, new_y]
+        valid_moves << [new_x, new_y]
       end
     end
 
@@ -38,11 +38,11 @@ class KnightPathFinder
         new_y = y_idx + adder_y
         next unless new_y.between?(0, 7)
 
-        possible_moves << [new_x, new_y]
+        valid_moves << [new_x, new_y]
       end
     end
 
-    possible_moves
+    valid_moves
   end
 
 end
