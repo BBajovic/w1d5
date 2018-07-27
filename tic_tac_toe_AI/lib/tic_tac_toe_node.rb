@@ -19,12 +19,28 @@ class TicTacToeNode
   # This method generates an array of all moves that can be made after
   # the current move.
   def children
-    new_board = deep_dup(board)
+    moves = []
+
+    board.rows.each_with_index do |row, row_idx|
+      row.each_with_index do |pos, col_idx|
+        if pos.nil?
+          new_board = board.dup
+          new_board.rows[row_idx][col_idx] = next_mover_mark
+          new_mark = switch_mark
+          moves << TicTacToeNode.new(new_board, new_mark, [row_idx,col_idx])
+        end
+      end
+    end
+    moves
   end
 
   private
 
-  def deep_dup(board)
-    board.map{|row| row.is_a?(Array) ? deep_dup(row) : row}
+  def switch_mark
+    next_mover_mark == :x ? :o : :x
   end
+
+  # def deep_dup(arr)
+  #   arr.map{|row| row.is_a?(Array) ? deep_dup(row) : row}
+  # end
 end
